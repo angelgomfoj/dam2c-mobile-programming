@@ -97,7 +97,7 @@
         android:layout_marginTop="36dp"
         android:layout_marginEnd="123dp"
         android:layout_marginBottom="395dp"
-        android:onClick="onClick"
+        android:onClick="calculate"
         android:text="Calcular"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
