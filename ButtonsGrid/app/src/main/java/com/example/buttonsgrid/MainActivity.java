@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridLayout;
+import androidx.gridlayout.widget.GridLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,10 +42,13 @@ public class MainActivity extends AppCompatActivity {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        v.setBackgroundColor(Color.BLUE);
+                        for (Button bx:listaBotones) {
+                            bx.setBackgroundColor(Color.BLUE);
+                        }
                     }
                 });
             }else{
+                b.setText("Reset");
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
