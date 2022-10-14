@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
+
+    // He usado el buttonStyleSmall para obtener ya este estilo formateado de botones
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
