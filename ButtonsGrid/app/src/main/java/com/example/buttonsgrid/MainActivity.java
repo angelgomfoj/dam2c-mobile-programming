@@ -42,9 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 b.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        for (Button bx:listaBotones) {
-                            bx.setBackgroundColor(Color.BLUE);
-                        }
+                            v.setBackgroundColor(Color.BLUE);
                     }
                 });
             }else{
