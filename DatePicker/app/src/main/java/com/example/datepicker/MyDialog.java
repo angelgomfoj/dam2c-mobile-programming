@@ -2,46 +2,44 @@ package com.example.datepicker;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.DatePicker;
+
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
-public class MyDialog extends DialogFragment {
-    respuestaMyDialog respuesta;
+public class MyDialog extends DialogFragment implements
+        DatePickerDialog.OnDateSetListener {
+    OnFechaSeleccionada f;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-// Usamos la clase Builder para construir el diálogo
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-//Escribimos el título
-        builder.setTitle("Pregunta muy importante:");
-//Escribimos la pregunta
-        builder.setMessage("¿Es un buen día?");
-//añadimos el botón de Si y su acción asociada
-        builder.setPositiveButton("¡SI!", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                respuesta.onRespuesta("Es un buen día!");
-            }
-        });
-//añadimos el botón de No y su acción asociada
-        builder.setNegativeButton("¡NO!", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                respuesta.onRespuesta("Es un mal día!");
-            }
-        });
-        // Crear el AlertDialog y devolverlo
-        return builder.create();
+        Calendar c= Calendar.getInstance();
+        int año=c.get(Calendar.YEAR);
+        int mes=c.get(Calendar.MONTH);
+        int dia=c.get(Calendar.DAY_OF_MONTH);
+        return new DatePickerDialog(getActivity(),this,año,mes,dia);
     }
-    public interface respuestaMyDialog {
-        public void onRespuesta(String s);
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int i, int i2, int i3) {
+        GregorianCalendar g=new GregorianCalendar(i,i2,i3);
+        f.onResultadoFecha(g);
+    }
+
+    public interface OnFechaSeleccionada {
+        public void onResultadoFecha(GregorianCalendar g);
     }
     // Se invoca cuando el fragmento se añade a la actividad
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        respuesta=(respuestaMyDialog)activity;
+            f=(OnFechaSeleccionada)activity;
+            super.onAttach(activity);
     }
 
 }
