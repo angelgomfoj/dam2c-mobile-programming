@@ -1,11 +1,9 @@
 package com.example.datepicker;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.widget.DatePicker;
 
@@ -13,7 +11,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
-public class MyDialog extends DialogFragment implements
+public class DateDialog extends DialogFragment implements
         DatePickerDialog.OnDateSetListener {
     OnFechaSeleccionada f;
 
