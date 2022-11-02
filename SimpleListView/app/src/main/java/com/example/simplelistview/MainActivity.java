@@ -23,6 +23,10 @@ public class MainActivity extends AppCompatActivity implements ListView.OnItemCl
         adaptador=new ArrayAdapter<String>(this,R.layout.fila,elementos);
         l.setAdapter(adaptador);
         l.setOnItemClickListener(this);
+
+
+
+
     }
     public void onItemClick(AdapterView<?> a, View view, int position, long id){
         TextView t=(TextView)findViewById(R.id.textView);
