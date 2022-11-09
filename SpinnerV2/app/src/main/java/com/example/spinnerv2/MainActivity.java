@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -14,54 +15,79 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity implements Spinner.OnItemSelectedListener {
 
-    String[] ciudades = {"Toledo", "Ciudad Real", "Albacete", "Cuenca",
-            "Guadalajara"};
-    String[] descripciones = {"La ciudad Imperial", "Qué gran ciudad",
-            "Ciudad gastronómica", "Ciudad encantada", "Ciudad colgante"};
-    // int imagenes[] = { R.drawable.toledo, R.drawable.ciudadreal,
-    //       R.drawable.albacete, R.drawable.cuenca, R.drawable.guadalajara};
+    String[] animales = {"Gato", "Pollo", "Mono"};
+
+    String[] textos = {"Es un felino", "Imagen de una gallina", "Un mono capaz de trepar arboles"};
+
+    int imagenes[] = {R.drawable.cat, R.drawable.chicken, R.drawable.monkey};
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        Spinner selectorPR = (Spinner) findViewById(R.id.spinner);
+        AdaptadorPersonalizado a = new AdaptadorPersonalizado(this, R.layout.componente_spinner, animales);
+        selectorPR.setAdapter(a);
+        selectorPR.setOnItemSelectedListener(this);
+    }
+
+
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Spinner sp = (Spinner) findViewById(R.id.spinner);
+
+        TextView titulo = (TextView) findViewById(R.id.mainTitle);
+        ImageView peli = (ImageView) findViewById(R.id.mainImage);
+        TextView description = (TextView) findViewById(R.id.mainText);
+
+        titulo.setText(animales[sp.getSelectedItemPosition()]);
+        peli.setImageResource(imagenes[sp.getSelectedItemPosition()]);
+        description.setText(textos[sp.getSelectedItemPosition()]);
+    }
+
+    public void onNothingSelected(AdapterView<?> adapterView) {
+        Spinner sp = (Spinner) findViewById(R.id.spinner);
+
+        TextView titulo = (TextView) findViewById(R.id.mainTitle);
+        ImageView peli = (ImageView) findViewById(R.id.mainImage);
+        TextView description = (TextView) findViewById(R.id.mainText);
+
+        titulo.setText(imagenes[sp.getSelectedItemPosition()]);
+        peli.setImageResource(imagenes[sp.getSelectedItemPosition()]);
+        description.setText(textos[sp.getSelectedItemPosition()]);
+    }
+
 
     public class AdaptadorPersonalizado extends ArrayAdapter<String> {
-        public AdaptadorPersonalizado(Context ctx, int txtViewResourceId, String[]
-                objects) {
+
+        public AdaptadorPersonalizado(Context ctx, int txtViewResourceId, String[] objects) {
             super(ctx, txtViewResourceId, objects);
         }
 
         @Override
         public View getDropDownView(int position, View cnvtView, ViewGroup prnt) {
-            return crearFilaPersonalizada(position, cnvtView, prnt);
+            return filaSpinner(position, cnvtView, prnt);
         }
 
         @Override
         public View getView(int pos, View cnvtView, ViewGroup prnt) {
-            return crearFilaPersonalizada(pos, cnvtView, prnt);
-        }
-
-        public View crearFilaPersonalizada(int position, View convertView,
-                                           ViewGroup parent) {
-            LayoutInflater inflater = getLayoutInflater();
-            View miFila = inflater.inflate(R.layout.lineaspiner, parent,
-                    false);
-            TextView nombre = (TextView) miFila.findViewById(R.id.nombre);
-            nombre.setText(ciudades[position]);
-            TextView descripcion = (TextView)
-                    miFila.findViewById(R.id.descripcion);
-            descripcion.setText(descripciones[position]);
-            ImageView imagen = (ImageView)
-                    miFila.findViewById(R.id.imagenCiudad);
-            imagen.setImageResource(imagenes[position]);
-            return miFila;
-
-            @Override
-            protected void onCreate (Bundle savedInstanceState){
-                super.onCreate(savedInstanceState);
-                setContentView(R.layout.activity_main);
-                Spinner selectorCiudades = (Spinner) findViewById(R.id.spinner);
-                AdaptadorPersonalizado a = new AdaptadorPersonalizado(this,
-                        R.layout.lineaspiner, ciudades);
-                selectorCiudades.setAdapter(a);
-                selectorCiudades.setOnItemSelectedListener(this);
-            }
+            return filaSpinner(pos, cnvtView, prnt);
         }
     }
+
+    public View filaSpinner(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = getLayoutInflater();
+        View filaSpinner = inflater.inflate(R.layout.componente_spinner, parent, false);
+
+        TextView title = (TextView) filaSpinner.findViewById(R.id.title);
+        title.setText(animales[position]);
+
+        TextView text = (TextView) filaSpinner.findViewById(R.id.text);
+        text.setText(textos[position]);
+
+        ImageView image = (ImageView) filaSpinner.findViewById(R.id.image);
+        image.setImageResource(imagenes[position]);
+
+        return filaSpinner;
+    }
+
 }

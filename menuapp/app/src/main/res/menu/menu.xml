@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/ajustes"
+        android:title="Ajustes"
+        android:orderInCategory="100"
+        app:showAsAction="ifRoom">
+        <menu><!-- submenú -->
+            <item android:id="@+id/confFacturas"
+                android:title="Configuración de Facturas"
+                android:orderInCategory="1"/>
+            <item android:id="@+id/confPedidos"
+                android:title="Configuración de Pedidos"
+                android:orderInCategory="2"/>
+            <item android:id="@+id/confClientes"
+                android:title="Configuración de Clientes"
+                android:orderInCategory="3"/>
+        </menu>
+    </item>
+    <item android:id="@+id/Clientes"
+        android:title="Clientes"
+        android:orderInCategory="1">
+    </item>
+    <item android:id="@+id/Facturas"
+        android:title="Facturas"
+        android:orderInCategory="2">
+    </item>
+</menu>
