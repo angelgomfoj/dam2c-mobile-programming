@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements Spinner.OnItemSel
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Spinner selectorPR = (Spinner) findViewById(R.id.spinner);
-        AdaptadorPersonalizado a = new AdaptadorPersonalizado(this, R.layout.componente_spinner, animales);
+        AdaptadorPersonalizado a = new AdaptadorPersonalizado(this, R.layout.spinner_component, animales);
         selectorPR.setAdapter(a);
         selectorPR.setOnItemSelectedListener(this);
     }
@@ -76,16 +76,13 @@ public class MainActivity extends AppCompatActivity implements Spinner.OnItemSel
 
     public View filaSpinner(int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = getLayoutInflater();
-        View filaSpinner = inflater.inflate(R.layout.componente_spinner, parent, false);
+        View filaSpinner = inflater.inflate(R.layout.spinner_component, parent, false);
 
         TextView title = (TextView) filaSpinner.findViewById(R.id.title);
         title.setText(animales[position]);
 
         TextView text = (TextView) filaSpinner.findViewById(R.id.text);
         text.setText(textos[position]);
-
-        ImageView image = (ImageView) filaSpinner.findViewById(R.id.image);
-        image.setImageResource(imagenes[position]);
 
         return filaSpinner;
     }
