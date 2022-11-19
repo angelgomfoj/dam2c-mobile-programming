@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Buscaminas v1</string>
+    <string name="bandera">🚩</string>
+    <string name="bomba">💣</string>
+</resources>
