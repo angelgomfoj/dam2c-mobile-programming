@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity implements OnCuadradoClickLi
     AdaptadorTablero adaptador;
     Buscaminas buscaminas;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,13 +20,25 @@ public class MainActivity extends AppCompatActivity implements OnCuadradoClickLi
 
         gridRecyclerView = findViewById(R.id.activity_main_grid);
         gridRecyclerView.setLayoutManager(new GridLayoutManager(this, 10));
-        buscaminas = new Buscaminas(10);
+        buscaminas = new Buscaminas(10,10);
         adaptador = new AdaptadorTablero(buscaminas.getTablero().getCuadrados(), this);
         gridRecyclerView.setAdapter(adaptador);
     }
 
     @Override
-    public void OnCuadradoClick(Cuadrado cuadrado){
-        Toast.makeText(getApplicationContext(), "Cuadrado clickado", Toast.LENGTH_SHORT).show();
+    public void onCuadradoClick(Cuadrado cuadrado) {
+        buscaminas.handleCuadradoClick(cuadrado);
+
+        if(buscaminas.isJuegoTerminado()){
+            Toast.makeText(getApplicationContext(),"El juego ha terminado.", Toast.LENGTH_SHORT).show();
+            buscaminas.getTablero().revelarBombas();
+            /*for (Cuadrado c: buscaminas.getTablero().getCuadrados()) {
+                c.setRevelado(true);
+            }*/
+        }else if(buscaminas.isJuegoGanado()){
+            Toast.makeText(getApplicationContext(),"Enhorabuena, has ganado!!!.", Toast.LENGTH_SHORT).show();
+            buscaminas.getTablero().revelarBombas();
+        }
+        adaptador.setCuadrados(buscaminas.getTablero().getCuadrados());
     }
 }

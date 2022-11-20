@@ -76,6 +76,16 @@ public class AdaptadorTablero extends RecyclerView.Adapter<AdaptadorTablero.Cuad
                         valueTextView.setTextColor(Color.GREEN);
                     } else if (cuadrado.getValor() == 3) {
                         valueTextView.setTextColor(Color.RED);
+                    }else if (cuadrado.getValor() == 4) {
+                        valueTextView.setTextColor(Color.MAGENTA);
+                    }else if (cuadrado.getValor() == 5) {
+                        valueTextView.setTextColor(Color.BLACK);
+                    }else if (cuadrado.getValor() == 6) {
+                        valueTextView.setTextColor(Color.LTGRAY);
+                    }else if (cuadrado.getValor() == 7) {
+                        valueTextView.setTextColor(Color.YELLOW);
+                    }else if (cuadrado.getValor() == 8) {
+                        valueTextView.setTextColor(Color.CYAN);
                     }
                 }
             } else if (cuadrado.isBandera()) {
