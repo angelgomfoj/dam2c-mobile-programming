@@ -41,4 +41,11 @@ public class MainActivity extends AppCompatActivity implements OnCuadradoClickLi
         }
         adaptador.setCuadrados(buscaminas.getTablero().getCuadrados());
     }
+
+    @Override
+    public void onCuadradoLongClick(Cuadrado cuadrado) {
+        buscaminas.handleCuadradoLongClick(cuadrado);
+        adaptador.setCuadrados(buscaminas.getTablero().getCuadrados());
+    }
+
 }

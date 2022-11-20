@@ -5,11 +5,9 @@ import java.util.List;
 
 public class Buscaminas {
     private Tablero tablero;
-    private boolean modoRevelar;
     private boolean juegoTerminado;
 
     public Buscaminas(int size, int numeroBombas){
-        this.modoRevelar = true;
         this.juegoTerminado = false;
         tablero = new Tablero(size);
         tablero.generateGrid(numeroBombas);
@@ -17,8 +15,16 @@ public class Buscaminas {
 
     public void handleCuadradoClick(Cuadrado cuadrado){
         if(!juegoTerminado) {
-            if (modoRevelar) {
                 revelar(cuadrado);
+        }
+    }
+
+    public void handleCuadradoLongClick(Cuadrado cuadrado) {
+        if(!juegoTerminado){
+            if(!cuadrado.isRevelado() && !cuadrado.isBandera()){
+                cuadrado.setBandera(true);
+            }else if(!cuadrado.isRevelado() && cuadrado.isBandera()){
+                cuadrado.setBandera(false);
             }
         }
     }
@@ -83,4 +89,6 @@ public class Buscaminas {
     public boolean isJuegoTerminado() {
         return juegoTerminado;
     }
+
+
 }

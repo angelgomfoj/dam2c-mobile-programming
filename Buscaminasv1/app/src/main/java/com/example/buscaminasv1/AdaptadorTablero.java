@@ -49,7 +49,7 @@ public class AdaptadorTablero extends RecyclerView.Adapter<AdaptadorTablero.Cuad
         public CuadradoViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            valueTextView = itemView.findViewById(R.id.item_cell_value);
+            valueTextView = itemView.findViewById(R.id.valor_cuadrado);
         }
 
         public void bind(final Cuadrado cuadrado) {
@@ -59,6 +59,14 @@ public class AdaptadorTablero extends RecyclerView.Adapter<AdaptadorTablero.Cuad
                 @Override
                 public void onClick(View view) {
                     listener.onCuadradoClick(cuadrado);
+                }
+            });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener(){
+                @Override
+                public boolean onLongClick(View view) {
+                    listener.onCuadradoLongClick(cuadrado);
+                    return false;
                 }
             });
 
