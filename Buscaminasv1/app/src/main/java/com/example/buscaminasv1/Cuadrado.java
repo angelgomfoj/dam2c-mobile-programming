@@ -1,6 +1,9 @@
 package com.example.buscaminasv1;
 
 public class Cuadrado {
+    // Clase cuadrado con sus getters y setters, ademas de 2 variables finales estaticas que se
+    // utilizan para determinar cuando el cuadrado es una bomba o esta vacio.
+
     public static final int BOMBA = -1;
     public static final int CUADRADO_VACIO = 0;
 

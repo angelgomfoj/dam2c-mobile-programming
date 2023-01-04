@@ -70,6 +70,8 @@ public class AdaptadorTablero extends RecyclerView.Adapter<AdaptadorTablero.Cuad
                 }
             });
 
+            // Asigna el correspondiente icono o texto al cuadrado revelado. (bomba, bandera, nada, 1,2,3...)
+
             if (cuadrado.isRevelado()) {
                 if (cuadrado.getValor() == Cuadrado.BOMBA) {
                     valueTextView.setText(R.string.bomba);
