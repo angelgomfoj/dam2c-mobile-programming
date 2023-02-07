@@ -5,29 +5,31 @@ import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.expensetrackersystem.DatabaseHandlerExpense;
-import com.example.expensetrackersystem.R;
-import com.example.expensetrackersystem.model.expenseModel;
+import com.example.controladorgastos.DatabaseHandler;
+import com.example.controladorgastos.R;
+import com.example.controladorgastos.modelo.Gasto;
 
 import java.util.Calendar;
 import java.util.List;
 
 public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewholder> {
     private Context context;
-    private List<expenseModel> expenseModelList;
-    private DatabaseHandlerExpense databaseHandler;
+    private List<Gasto> listaGastos;
+    private DatabaseHandler databaseHandler;
 
-    public expenseAdapter2(Context context, List<expenseModel> expenseModelList, DatabaseHandlerExpense databaseHandler) {
+    public expenseAdapter2(Context context, List<Gasto> listaGastos, DatabaseHandler databaseHandler) {
         this.context = context;
-        this.expenseModelList = expenseModelList;
+        this.listaGastos = listaGastos;
         this.databaseHandler = databaseHandler;
     }
 
@@ -40,36 +42,35 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-        expenseModel model = expenseModelList.get(position);
-        holder.tv_incomeAmount.setText("₹"+model.getAmount());
-        holder.tv_incomeType.setText(model.getType());
-        holder.tv_incomeNote.setText(model.getNote());
+        Gasto g = listaGastos.get(position);
+        holder.tv_incomeAmount.setText(g.getImporte()+"€");
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(Long.parseLong(model.getDate()));
-        String formattedDate = DateFormat.format("dd/MM/yyyy", calendar).toString();
+        String formattedDate = DateFormat.format("dd/MM/yyyy", g.getFecha()).toString();
 
         holder.tv_incomeDate.setText(formattedDate);
+        holder.tv_incomeType.setText(g.getCategoria());
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showExpenseDialog(context, model);
+                showExpenseDialog(context, g);
             }
         });
     }
 
-    public void showExpenseDialog(Context context, expenseModel model) {
+    public void showExpenseDialog(Context context, Gasto g) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
-        final View customLayout = LayoutInflater.from(context).inflate(R.layout.expense_add_item, null);
-        EditText et_income = customLayout.findViewById(R.id.et_incomeAmount);
-        EditText et_type = customLayout.findViewById(R.id.et_incomeType);
-        EditText et_note = customLayout.findViewById(R.id.et_incomeNote);
+        final View customLayout = LayoutInflater.from(context).inflate(R.layout.gasto_add_item, null);
+        EditText et_income = customLayout.findViewById(R.id.et_amount);
+        Spinner s_category = customLayout.findViewById(R.id.spinner);
+        EditText et_description = customLayout.findViewById(R.id.et_descripcion);
 
-        et_income.setText(model.getAmount());
-        et_type.setText(model.getType());
-        et_note.setText(model.getNote());
+        et_income.setText(String.valueOf(g.getImporte()));
+        //et_type.setText(g.getType());
+        s_category.setPrompt("testing");
+        et_description.setText(g.getDescripcion());
 
         Button btn_save = customLayout.findViewById(R.id.btn_save);
         Button btn_cancel = customLayout.findViewById(R.id.btn_cancel);
@@ -89,23 +90,23 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = model.getId();
+                String id = String.valueOf(g.getId());
                 String amount = et_income.getText().toString();
-                String type = et_type.getText().toString();
-                String note = et_note.getText().toString();
+                String type = s_category.getSelectedItem().toString();
+                String note = et_description.getText().toString();
                 long date = System.currentTimeMillis();
 
                 if (amount.isEmpty()) {
                     et_income.setError("Empty amount");
                     return;
                 } else if (type.isEmpty()) {
-                    et_type.setError("Empty Type");
+                    //et_type.setError("Empty Type");
                     return;
                 } else if (note.isEmpty()) {
-                    et_note.setError("Empty note");
+                    et_description.setError("Empty note");
                     return;
                 } else {
-                    databaseHandler.update(id, amount, type, note, String.valueOf(date));
+                   // databaseHandler.update(id, amount, type, note, String.valueOf(date));
                     alertDialog.dismiss();
                 }
 
@@ -116,7 +117,7 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
 
     @Override
     public int getItemCount() {
-        return expenseModelList.size();
+        return listaGastos.size();
     }
 
     class viewholder extends RecyclerView.ViewHolder {
@@ -131,5 +132,13 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
             tv_incomeAmount = itemView.findViewById(R.id.tv_incomeAmount);
 
         }
+    }
+    public void onItemSelected(AdapterView<?> parent, View view,
+                               int pos, long id) {
+        parent.getItemAtPosition(pos);
+
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
     }
 }

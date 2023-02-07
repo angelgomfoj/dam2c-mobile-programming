@@ -10,20 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.expensetrackersystem.R;
-import com.example.expensetrackersystem.model.expenseModel;
+import com.example.controladorgastos.modelo.Gasto;
+import com.example.controladorgastos.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 public class expenseAdapter extends RecyclerView.Adapter<expenseAdapter.viewholder> {
     private Context context;
-    private List<expenseModel> incomeModelList = new ArrayList<>();
+    private List<Gasto> listaGastos = new ArrayList<>();
 
-    public expenseAdapter(Context context, List<expenseModel> incomeModelList) {
+    public expenseAdapter(Context context, List<Gasto> listaGastos) {
         this.context = context;
-        this.incomeModelList = incomeModelList;
+        this.listaGastos = listaGastos;
     }
 
     @NonNull
@@ -35,20 +34,18 @@ public class expenseAdapter extends RecyclerView.Adapter<expenseAdapter.viewhold
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
-        expenseModel model = incomeModelList.get(position);
-        holder.tv_incomeAmount.setText("₹"+model.getAmount());
+        Gasto g = listaGastos.get(position);
+        holder.tv_incomeAmount.setText(String.format("%.2f",g.getImporte())+"€");
 
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(Long.parseLong(model.getDate()));
-        String formattedDate = DateFormat.format("dd/MM/yyyy", calendar).toString();
+        String formattedDate = DateFormat.format("dd/MM/yyyy", g.getFecha()).toString();
 
         holder.tv_incomeDate.setText(formattedDate);
-        holder.tv_incomeJob.setText(model.getType());
+        holder.tv_incomeJob.setText(g.getCategoria());
     }
 
     @Override
     public int getItemCount() {
-        return incomeModelList.size();
+        return listaGastos.size();
     }
 
     class viewholder extends RecyclerView.ViewHolder {

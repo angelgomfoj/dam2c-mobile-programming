@@ -13,10 +13,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controladorgastos.R;
-import com.example.expensetrackersystem.DatabaseHandlerExpense;
-import com.example.expensetrackersystem.PieChart;
-import com.example.expensetrackersystem.adapter.expenseAdapter2;
-import com.example.expensetrackersystem.model.expenseModel;
+import com.example.controladorgastos.DatabaseHandler;
+//import com.example.expensetrackersystem.PieChart;
+//import com.example.expensetrackersystem.adapter.expenseAdapter2;
+import com.example.controladorgastos.adaptador.expenseAdapter2;
+import com.example.controladorgastos.modelo.Gasto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,8 +71,8 @@ public class ViewGastos extends Fragment {
 
     private TextView tvExpense;
     private RecyclerView rvExpense;
-    private List<expenseModel> expenseModelList = new ArrayList<>();
-    private DatabaseHandlerExpense databaseHandlerExpense;
+    private List<Gasto> listaGastos = new ArrayList<>();
+    private DatabaseHandler databaseHandler;
     private String totalExpense;
 
     private ImageView iv_expensePie;
@@ -85,28 +86,21 @@ public class ViewGastos extends Fragment {
 
         init(view);
 
-        iv_expensePie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), PieChart.class));
-            }
-        });
-
         fillExpense();
 
         return view;
     }
 
     private void fillExpense() {
-        expenseModelList = databaseHandlerExpense.getAllIncome();
+        listaGastos = databaseHandler.getAllGastos();
         int total = 0;
-        for (expenseModel model : expenseModelList) {
-            total += Integer.parseInt(model.getAmount());
+        for (Gasto g : listaGastos) {
+            total += g.getImporte();
         }
         totalExpense = String.valueOf(total);
-        tvExpense.setText("₹" + totalExpense);
+        tvExpense.setText(totalExpense+"E");
 
-        expenseAdapter = new expenseAdapter2(getContext(), expenseModelList, databaseHandlerExpense);
+        expenseAdapter = new expenseAdapter2(getContext(), listaGastos, databaseHandler);
         rvExpense.setLayoutManager(new LinearLayoutManager(getContext()));
         rvExpense.setHasFixedSize(true);
 
@@ -116,8 +110,7 @@ public class ViewGastos extends Fragment {
     private void init(View view) {
         tvExpense = view.findViewById(R.id.tvExpense);
         rvExpense = view.findViewById(R.id.rvExpense);
-        iv_expensePie = view.findViewById(R.id.iv_expensePie);
-        databaseHandlerExpense = new DatabaseHandlerExpense(getContext());
+        databaseHandler = new DatabaseHandler(getContext());
     }
 
 

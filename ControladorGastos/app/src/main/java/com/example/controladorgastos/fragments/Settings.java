@@ -1,25 +1,11 @@
 package com.example.controladorgastos.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.controladorgastos.R;
-import com.example.expensetrackersystem.DatabaseHandler;
-import com.example.expensetrackersystem.PieChartIncome;
-import com.example.expensetrackersystem.adapter.incomeAdapter2;
-import com.example.expensetrackersystem.model.incomeModel;
+//import com.example.expensetrackersystem.PieChartIncome;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -68,7 +54,7 @@ public class Settings extends Fragment {
         }
     }
 
-    private TextView tvIncome;
+/*    private TextView tvIncome;
     private RecyclerView rvIncome;
     private List<incomeModel> incomeModelList = new ArrayList<>();
     private DatabaseHandler databaseHandler;
@@ -118,6 +104,6 @@ public class Settings extends Fragment {
         rvIncome = view.findViewById(R.id.rv_income);
         iv_expensePie = view.findViewById(R.id.iv_expensePie);
         databaseHandler = new DatabaseHandler(getContext());
-    }
+    }*/
 
 }
