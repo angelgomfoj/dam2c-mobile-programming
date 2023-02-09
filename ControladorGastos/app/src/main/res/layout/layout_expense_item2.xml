@@ -24,7 +24,7 @@
             android:layout_marginLeft="28dp"
             android:layout_toRightOf="@id/tv_incomeDate"
             android:text="Job"
-            android:textColor="@color/colorTexto"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
@@ -36,7 +36,7 @@
             android:layout_marginLeft="28dp"
             android:layout_toRightOf="@id/tv_incomeDate"
             android:text="Extra Income"
-            android:textColor="@color/colorTexto"
+            android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 

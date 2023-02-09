@@ -40,7 +40,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addGasto(String categoria, String descripcion, double importe, int fecha) {
+    public boolean addGasto(String categoria, String descripcion, double importe, long fecha) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("CATEGORIA", categoria);
@@ -72,7 +72,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         }
     }
 
-    public boolean updateGasto(int id, String categoria, String descripcion, double importe, int fecha) {
+    public boolean updateGasto(int id, String categoria, String descripcion, double importe, long fecha) {
         SQLiteDatabase database = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("CATEGORIA", categoria);
@@ -116,7 +116,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             }
 
             while (gastos.moveToNext()) {
-                listaGastos.add(new Gasto(gastos.getInt(0), gastos.getString(1), gastos.getString(2), gastos.getDouble(3), new Date(gastos.getInt(4))));
+                listaGastos.add(new Gasto(gastos.getInt(0), gastos.getString(1), gastos.getString(2), gastos.getDouble(3), new Date(gastos.getLong(4))));
             }
         }
 

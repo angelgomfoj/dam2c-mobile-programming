@@ -1,9 +1,11 @@
 package com.example.controladorgastos.fragments;
 
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -114,6 +116,7 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
     }
 
     private void fillModeloGasto() {
+
         listaGastos = databaseHandler.getAllGastos();
 
         double total = 0;
@@ -139,6 +142,8 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
 
     private void showGastoDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+
+        getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING);
 
 
         final View customLayout = getLayoutInflater().inflate(R.layout.gasto_add_item, null);
@@ -174,20 +179,23 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
             public void onClick(View v) {
                 String categoria = spinner.getSelectedItem().toString();
                 String descripcion = et_descripcion.getText().toString();
-                double importe = Double.valueOf(et_income.getText().toString());
                 long date = System.currentTimeMillis();
 
 
-                if (categoria.isEmpty()) {
-                    et_income.setError("Empty amount");
+                if (et_income.getText().toString().isEmpty()) {
+                    et_income.setError("Importe vacio");
                 } else if (descripcion.isEmpty()) {
-                    et_descripcion.setError("Empty Type");
-                    //} else if (importe.isEmpty()) {
-                    //  et_note.setError("Empty note");
+                    et_descripcion.setError("Descripcion vacia");
                 } else {
-                    databaseHandler.addGasto(categoria, descripcion, importe, (int) date);
+                    double importe = Double.valueOf(et_income.getText().toString());
+                    databaseHandler.addGasto(categoria, descripcion, importe, date);
                     alertDialog.dismiss();
                     fillModeloGasto();
+                    expenseAdapter = new expenseAdapter(getContext(), listaGastos);
+                    rv_expense.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+                    rv_expense.setHasFixedSize(true);
+
+                    rv_expense.setAdapter(expenseAdapter);
                 }
 
             }

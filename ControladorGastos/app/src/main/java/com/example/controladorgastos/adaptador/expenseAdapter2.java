@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -19,7 +20,6 @@ import com.example.controladorgastos.DatabaseHandler;
 import com.example.controladorgastos.R;
 import com.example.controladorgastos.modelo.Gasto;
 
-import java.util.Calendar;
 import java.util.List;
 
 public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewholder> {
@@ -49,6 +49,7 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
 
         holder.tv_incomeDate.setText(formattedDate);
         holder.tv_incomeType.setText(g.getCategoria());
+        holder.tv_incomeNote.setText(g.getDescripcion());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +60,7 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
         });
     }
 
+
     public void showExpenseDialog(Context context, Gasto g) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
 
@@ -68,8 +70,12 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
         EditText et_description = customLayout.findViewById(R.id.et_descripcion);
 
         et_income.setText(String.valueOf(g.getImporte()));
-        //et_type.setText(g.getType());
-        s_category.setPrompt("testing");
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(context.getApplicationContext(), R.array.array_categorias, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s_category.setAdapter(adapter);
+        int spinnerPosition = adapter.getPosition(g.getCategoria());
+        s_category.setSelection(spinnerPosition);
         et_description.setText(g.getDescripcion());
 
         Button btn_save = customLayout.findViewById(R.id.btn_save);
@@ -90,26 +96,24 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String id = String.valueOf(g.getId());
-                String amount = et_income.getText().toString();
-                String type = s_category.getSelectedItem().toString();
-                String note = et_description.getText().toString();
+                int id = g.getId();
+                double amount = Double.valueOf(et_income.getText().toString());
+                String category = s_category.getSelectedItem().toString();
+                String description = et_description.getText().toString();
                 long date = System.currentTimeMillis();
 
-                if (amount.isEmpty()) {
+                if (String.valueOf(amount).isEmpty()) {
                     et_income.setError("Empty amount");
                     return;
-                } else if (type.isEmpty()) {
-                    //et_type.setError("Empty Type");
-                    return;
-                } else if (note.isEmpty()) {
+                } else if (description.isEmpty()) {
                     et_description.setError("Empty note");
                     return;
                 } else {
-                   // databaseHandler.update(id, amount, type, note, String.valueOf(date));
+                   databaseHandler.updateGasto(id, category, description, amount, date);
                     alertDialog.dismiss();
                 }
-
+                listaGastos = databaseHandler.getAllGastos();
+                notifyDataSetChanged();
             }
         });
 
