@@ -135,5 +135,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return u;
     }
 
+    public List<Gasto> getFilteredGastos(String categoria){
+        List<Gasto> listaGastosFiltrados = new ArrayList<>();
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor gastos = db.rawQuery("SELECT * FROM gasto WHERE CATEGORIA LIKE \""+categoria+"\"", null);
+
+        if (gastos.getCount() == 0) {
+
+        } else {
+            if (listaGastosFiltrados == null) {
+                listaGastosFiltrados = new ArrayList<>();
+            }
+
+            while (gastos.moveToNext()) {
+                listaGastosFiltrados.add(new Gasto(gastos.getInt(0), gastos.getString(1), gastos.getString(2), gastos.getDouble(3), new Date(gastos.getLong(4))));
+            }
+        }
+        return listaGastosFiltrados;
+
+    }
+
 
 }

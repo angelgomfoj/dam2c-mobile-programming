@@ -12,7 +12,7 @@
             android:id="@+id/tv_incomeDate"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:text="Jun 28,2019"
+            android:text="11/02/2023"
             android:textColor="@color/light_red"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
             android:layout_toRightOf="@id/tv_incomeDate"
-            android:text="Job"
+            android:text="Categoria"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -35,7 +35,7 @@
             android:layout_below="@id/tv_incomeType"
             android:layout_marginLeft="28dp"
             android:layout_toRightOf="@id/tv_incomeDate"
-            android:text="Extra Income"
+            android:text="Descripcion"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />

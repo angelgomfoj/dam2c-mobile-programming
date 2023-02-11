@@ -7,34 +7,15 @@
     android:background="@color/black"
     tools:context=".fragments.ViewGastos">
 
-    <TextView
-        android:id="@+id/tv_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="20dp"
-        android:text="ProjectGurukul"
-        android:textColor="@color/white"
-        android:textSize="32sp" />
-
-    <TextView
-        android:id="@+id/tv_text2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tv_text"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="20dp"
-        android:text="Expense"
-        android:textColor="@color/white"
-        android:textSize="28sp" />
-
-
     <RelativeLayout
         android:id="@+id/rr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_text2">
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="20dp"
+        >
+
 
         <LinearLayout
             android:id="@+id/ll"
@@ -48,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/bungee_inline"
-                android:text="Expense"
+                android:text="LISTA DE GASTOS"
                 android:textColor="@color/light_red"
                 android:textSize="24sp" />
 
@@ -56,20 +37,48 @@
                 android:id="@+id/tvExpense"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rs. 10000.00"
+                android:text="0€"
                 android:textColor="@color/light_red"
                 android:textSize="24sp" />
-
         </LinearLayout>
-
-
     </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/llf"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rr"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="4dp"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <ImageView
+            android:layout_width="200px"
+            android:layout_height="200px"
+            android:padding="10sp"
+            android:layout_weight="2"
+            app:srcCompat="@drawable/ic_filtro" />
+
+        <Spinner
+            android:id="@+id/spinnerFilter"
+            android:layout_width="300px"
+            android:layout_height="100px"
+            android:layout_gravity="center"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="3"
+            android:background="@color/white"
+            android:popupBackground="@color/white" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvExpense"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rr"
+        android:layout_below="@id/llf"
         android:layout_marginTop="14dp"
         android:scrollbars="horizontal"
         tools:listitem="@layout/layout_expense_item2" />
