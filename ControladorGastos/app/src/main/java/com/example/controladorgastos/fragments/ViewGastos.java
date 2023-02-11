@@ -107,7 +107,7 @@ public class ViewGastos extends Fragment implements AdapterView.OnItemSelectedLi
         }
         tvExpense.setText(String.format("%.2f",total) + "€");
 
-        expenseAdapter = new expenseAdapter2(getContext(), listaGastos, databaseHandler);
+        expenseAdapter = new expenseAdapter2(getContext(), listaGastos, databaseHandler,tvExpense,num,spinnerF.getSelectedItem().toString());
         rvExpense.setLayoutManager(new LinearLayoutManager(getContext()));
         rvExpense.setHasFixedSize(true);
 

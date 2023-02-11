@@ -94,12 +94,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         contentValues.put("USERNAME", username);
         contentValues.put("LIMITEGASTOS", limiteGastos);
 
-        long result = database.update("usuario", contentValues, "username=?", new String[]{username});
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        database.execSQL("DELETE FROM usuario");
+        addUsuario(username, limiteGastos);
+        return true;
     }
 
     public List<Gasto> getAllGastos() {
@@ -124,21 +121,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     }
 
     public Usuario getUsuario() {
-        Usuario u = new Usuario();
+        Usuario u = null;
 
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor usuario = db.rawQuery("SELECT * FROM usuario", null);
 
+        if (usuario.getCount() == 0) {
 
-        u = (new Usuario(usuario.getString(0), usuario.getDouble(1)));
-
+        } else {
+            usuario.moveToNext();
+            u = (new Usuario(usuario.getString(0), usuario.getDouble(1)));
+        }
         return u;
     }
 
-    public List<Gasto> getFilteredGastos(String categoria){
+    public List<Gasto> getFilteredGastos(String categoria) {
         List<Gasto> listaGastosFiltrados = new ArrayList<>();
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor gastos = db.rawQuery("SELECT * FROM gasto WHERE CATEGORIA LIKE \""+categoria+"\"", null);
+        Cursor gastos = db.rawQuery("SELECT * FROM gasto WHERE CATEGORIA LIKE \"" + categoria + "\"", null);
 
         if (gastos.getCount() == 0) {
 

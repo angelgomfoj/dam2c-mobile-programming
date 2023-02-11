@@ -46,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_marginRight="24dp"
-            android:text="4800"
+            android:text="1000€"
             android:textColor="@color/light_red"
             android:textSize="20sp"
             android:textStyle="bold" />

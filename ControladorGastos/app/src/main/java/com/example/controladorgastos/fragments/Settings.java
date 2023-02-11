@@ -1,17 +1,26 @@
 package com.example.controladorgastos.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
-//import com.example.expensetrackersystem.PieChartIncome;
+import com.example.controladorgastos.DatabaseHandler;
+
+import com.example.controladorgastos.R;
+import com.example.controladorgastos.adaptador.expenseAdapter;
+import com.example.controladorgastos.modelo.Usuario;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Settings#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class Settings extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -23,27 +32,25 @@ public class Settings extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public Settings() {
-        // Required empty public constructor
+    private BottomNavigationView bnv;
+
+    public Settings(BottomNavigationView bnv) {
+        this.bnv = bnv;
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Settings.
-     */
+
     // TODO: Rename and change types and number of parameters
+    /*
     public static Settings newInstance(String param1, String param2) {
-        Settings fragment = new Settings();
+        Settings fragment = new Settings(bnv);
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
+
+     */
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,57 +60,70 @@ public class Settings extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
-/*    private TextView tvIncome;
-    private RecyclerView rvIncome;
-    private List<incomeModel> incomeModelList = new ArrayList<>();
+    private EditText et_usuario, et_limiteGasto;
+    Button btn_save;
     private DatabaseHandler databaseHandler;
-    private String totalIncome;
-
-    private incomeAdapter2 expenseAdapter;
-
-    private ImageView iv_expensePie;
+    private Usuario user;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_income, container, false);
+        View view = inflater.inflate(R.layout.fragment_configuracion, container, false);
 
         init(view);
 
-        iv_expensePie.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), PieChartIncome.class));
-            }
-        });
-
-        fillExpense();
+        fillUser();
 
         return view;
     }
 
-    public void fillExpense() {
-        incomeModelList = databaseHandler.getAllIncome();
-        int total = 0;
-        for (incomeModel model : incomeModelList) {
-            total += Integer.parseInt(model.getAmount());
+    public void fillUser() {
+        user = databaseHandler.getUsuario();
+        if(user==null){
+
+        }else{
+            et_usuario.setText(user.getUsername());
+            et_limiteGasto.setText(String.format("%.2f",user.getLimiteGastos()));
+
         }
-        totalIncome = String.valueOf(total);
-        tvIncome.setText("₹" + totalIncome);
 
-        expenseAdapter = new incomeAdapter2(getContext(), incomeModelList, databaseHandler);
-        rvIncome.setLayoutManager(new LinearLayoutManager(getContext()));
-        rvIncome.setHasFixedSize(true);
-
-        rvIncome.setAdapter(expenseAdapter);
     }
 
     private void init(View view) {
-        tvIncome = view.findViewById(R.id.tv_income);
-        rvIncome = view.findViewById(R.id.rv_income);
-        iv_expensePie = view.findViewById(R.id.iv_expensePie);
+        et_usuario = view.findViewById(R.id.et_usuario);
+        et_limiteGasto = view.findViewById(R.id.et_limiteGasto);
+        btn_save = view.findViewById(R.id.btn_saveC);
         databaseHandler = new DatabaseHandler(getContext());
-    }*/
+        btn_save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = et_usuario.getText().toString();
+
+                if (et_limiteGasto.getText().toString().isEmpty()) {
+                    et_limiteGasto.setError("Limite gasto vacio");
+                } else if (username.isEmpty()) {
+                    et_usuario.setError("Usuario vacio");
+                } else {
+                    double limiteGasto = Double.valueOf(et_limiteGasto.getText().toString());
+                    if(databaseHandler.getUsuario()==null){
+                        databaseHandler.addUsuario(username,limiteGasto);
+                    }else{
+                        databaseHandler.updateUsuario(username,limiteGasto);
+                    }
+                    fillUser();
+                    try {
+                        InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
+                    } catch (Exception e) {
+                        // TODO: handle exception
+                    }
+                    bnv.getMenu().getItem(1).setEnabled(true);
+                    bnv.getMenu().getItem(2).setEnabled(true);
+                    bnv.setSelectedItemId(R.id.addGastos);
+                }
+
+            }
+        });
+    }
 
 }

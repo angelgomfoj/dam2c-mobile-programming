@@ -77,12 +77,13 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
     }
 
     private RecyclerView rv_expense;
-    private TextView tv_expense, tv_saldo;
+    private TextView tv_expense, tv_restante, tv_limitGasto;
+
 
     FloatingActionButton mAddFab;
+    double totalGasto;
     TextView addIncomeText, addExpenseText;
 
-    //private incomeAdapter incomeAdapter;
     private expenseAdapter expenseAdapter;
 
     private Usuario usuario = new Usuario();
@@ -103,7 +104,7 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
 
         databaseHandler = new DatabaseHandler(getContext());
 
-        //fillModeloUsuario();
+        fillModeloUsuario();
         fillModeloGasto();
 
         mAddFab.setOnClickListener(new View.OnClickListener() {
@@ -123,8 +124,9 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
         for (Gasto g : listaGastos) {
             total += g.getImporte();
         }
-
+        totalGasto = total;
         tv_expense.setText(String.format("%.2f",total) + "€");
+        tv_restante.setText(String.format("%.2f",usuario.getLimiteGastos()-total) + "€");
 
         expenseAdapter = new expenseAdapter(getContext(), listaGastos);
         rv_expense.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -134,9 +136,9 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
     }
 
     private void fillModeloUsuario() {
-        //usuario = databaseHandler.getUsuario();
-        //tv_saldo.setText(usuario.getLimiteGastos() + "€");
-        tv_saldo.setText("1000€");
+        usuario = databaseHandler.getUsuario();
+        tv_limitGasto.setText(String.format("%.2f",usuario.getLimiteGastos()) + "€");
+        tv_restante.setText(String.format("%.2f",totalGasto)+"€");
     }
 
 
@@ -208,12 +210,11 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
 
         tv_expense = root.findViewById(R.id.tv_expense);
 
-        tv_expense.setText("Rs. 8000");
+        tv_limitGasto = root.findViewById(R.id.tv_limitGasto);
+
+        tv_restante = root.findViewById(R.id.tv_restante);
 
         mAddFab = root.findViewById(R.id.add_fab);
-        ;
-
-        // addExpenseText = root.findViewById(R.id.add_expense_text);
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,

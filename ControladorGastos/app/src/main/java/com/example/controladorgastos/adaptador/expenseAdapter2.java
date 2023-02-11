@@ -1,6 +1,7 @@
 package com.example.controladorgastos.adaptador;
 
 import android.content.Context;
+import android.text.Layout;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,11 +27,17 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
     private Context context;
     private List<Gasto> listaGastos;
     private DatabaseHandler databaseHandler;
+    private int mode;
+    private String filter;
+    private TextView gastoTotalFiltrado;
 
-    public expenseAdapter2(Context context, List<Gasto> listaGastos, DatabaseHandler databaseHandler) {
+    public expenseAdapter2(Context context, List<Gasto> listaGastos, DatabaseHandler databaseHandler,TextView gastoTotalFiltrado,int num,String filter) {
         this.context = context;
         this.listaGastos = listaGastos;
         this.databaseHandler = databaseHandler;
+        this.mode = num;
+        this.filter = filter;
+        this.gastoTotalFiltrado = gastoTotalFiltrado;
     }
 
     @NonNull
@@ -112,7 +119,16 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
                    databaseHandler.updateGasto(id, category, description, amount, date);
                     alertDialog.dismiss();
                 }
-                listaGastos = databaseHandler.getAllGastos();
+                if (mode==0){
+                    listaGastos = databaseHandler.getAllGastos();
+                }else{
+                    listaGastos = databaseHandler.getFilteredGastos(filter);
+                }
+                double total = 0;
+                for (Gasto g : listaGastos) {
+                    total += g.getImporte();
+                }
+                gastoTotalFiltrado.setText(String.format("%.2f",total) + "€");
                 notifyDataSetChanged();
             }
         });
