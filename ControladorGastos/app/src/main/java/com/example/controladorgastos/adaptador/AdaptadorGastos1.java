@@ -16,11 +16,11 @@ import com.example.controladorgastos.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class expenseAdapter extends RecyclerView.Adapter<expenseAdapter.viewholder> {
+public class AdaptadorGastos1 extends RecyclerView.Adapter<AdaptadorGastos1.viewholder> {
     private Context context;
     private List<Gasto> listaGastos = new ArrayList<>();
 
-    public expenseAdapter(Context context, List<Gasto> listaGastos) {
+    public AdaptadorGastos1(Context context, List<Gasto> listaGastos) {
         this.context = context;
         this.listaGastos = listaGastos;
     }
@@ -28,19 +28,19 @@ public class expenseAdapter extends RecyclerView.Adapter<expenseAdapter.viewhold
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_expense_item, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_gasto_item1, parent, false);
         return new viewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         Gasto g = listaGastos.get(position);
-        holder.tv_incomeAmount.setText(String.format("%.2f",g.getImporte())+"€");
+        holder.tv_cantidadGasto.setText(String.format("%.2f",g.getImporte())+"€");
 
         String formattedDate = DateFormat.format("dd/MM/yyyy", g.getFecha()).toString();
 
-        holder.tv_incomeDate.setText(formattedDate);
-        holder.tv_incomeJob.setText(g.getCategoria());
+        holder.tv_fechaGasto.setText(formattedDate);
+        holder.tv_categoriaGasto.setText(g.getCategoria());
     }
 
     @Override
@@ -49,14 +49,14 @@ public class expenseAdapter extends RecyclerView.Adapter<expenseAdapter.viewhold
     }
 
     class viewholder extends RecyclerView.ViewHolder {
-        TextView tv_incomeJob, tv_incomeAmount, tv_incomeDate;
+        TextView tv_categoriaGasto, tv_cantidadGasto, tv_fechaGasto;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
-            tv_incomeAmount = itemView.findViewById(R.id.tv_expenseAmount);
-            tv_incomeJob = itemView.findViewById(R.id.tv_expenseJob);
-            tv_incomeDate = itemView.findViewById(R.id.tv_expenseDate);
+            tv_cantidadGasto = itemView.findViewById(R.id.tv_cantidadGasto);
+            tv_categoriaGasto = itemView.findViewById(R.id.tv_categoriaGasto);
+            tv_fechaGasto = itemView.findViewById(R.id.tv_fechaGasto);
         }
     }
 }

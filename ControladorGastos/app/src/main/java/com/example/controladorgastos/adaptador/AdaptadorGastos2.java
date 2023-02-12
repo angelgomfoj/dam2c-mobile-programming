@@ -2,13 +2,10 @@ package com.example.controladorgastos.adaptador;
 
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.Color;
-import android.text.Layout;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,7 +23,7 @@ import com.example.controladorgastos.modelo.Gasto;
 
 import java.util.List;
 
-public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewholder> {
+public class AdaptadorGastos2 extends RecyclerView.Adapter<AdaptadorGastos2.viewholder> {
     private Context context;
     private List<Gasto> listaGastos;
     private DatabaseHandler databaseHandler;
@@ -34,7 +31,7 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
     private String filter;
     private TextView gastoTotalFiltrado;
 
-    public expenseAdapter2(Context context, List<Gasto> listaGastos, DatabaseHandler databaseHandler,TextView gastoTotalFiltrado,int num,String filter) {
+    public AdaptadorGastos2(Context context, List<Gasto> listaGastos, DatabaseHandler databaseHandler, TextView gastoTotalFiltrado, int num, String filter) {
         this.context = context;
         this.listaGastos = listaGastos;
         this.databaseHandler = databaseHandler;
@@ -46,20 +43,20 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
     @NonNull
     @Override
     public viewholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.layout_expense_item2, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.layout_gasto_item2, parent, false);
         return new viewholder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
         Gasto g = listaGastos.get(position);
-        holder.tv_incomeAmount.setText(g.getImporte()+"€");
+        holder.tv_cantidadGasto.setText(g.getImporte()+"€");
 
         String formattedDate = DateFormat.format("dd/MM/yyyy", g.getFecha()).toString();
 
-        holder.tv_incomeDate.setText(formattedDate);
-        holder.tv_incomeType.setText(g.getCategoria());
-        holder.tv_incomeNote.setText(g.getDescripcion());
+        holder.tv_fechaGato.setText(formattedDate);
+        holder.tv_categoriaGasto.setText(g.getCategoria());
+        holder.tv_descripcionGasto.setText(g.getDescripcion());
 
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -178,24 +175,16 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
     }
 
     class viewholder extends RecyclerView.ViewHolder {
-        private TextView tv_incomeDate, tv_incomeType, tv_incomeNote, tv_incomeAmount;
+        private TextView tv_fechaGato, tv_categoriaGasto, tv_descripcionGasto, tv_cantidadGasto;
 
         public viewholder(@NonNull View itemView) {
             super(itemView);
 
-            tv_incomeDate = itemView.findViewById(R.id.tv_incomeDate);
-            tv_incomeType = itemView.findViewById(R.id.tv_incomeType);
-            tv_incomeNote = itemView.findViewById(R.id.tv_incomeNote);
-            tv_incomeAmount = itemView.findViewById(R.id.tv_incomeAmount);
+            tv_fechaGato = itemView.findViewById(R.id.tv_fechaGato);
+            tv_categoriaGasto = itemView.findViewById(R.id.tv_categoriaGasto);
+            tv_descripcionGasto = itemView.findViewById(R.id.tv_descripcionGasto);
+            tv_cantidadGasto = itemView.findViewById(R.id.tv_cantidadGasto);
 
         }
-    }
-    public void onItemSelected(AdapterView<?> parent, View view,
-                               int pos, long id) {
-        parent.getItemAtPosition(pos);
-
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
     }
 }

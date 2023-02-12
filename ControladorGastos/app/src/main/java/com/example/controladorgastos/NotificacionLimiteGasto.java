@@ -1,6 +1,5 @@
 package com.example.controladorgastos;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 
@@ -11,8 +10,6 @@ import android.os.Build;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
-
-import com.example.controladorgastos.fragments.AddGastos;
 
 
 public class NotificacionLimiteGasto{
@@ -28,12 +25,12 @@ public class NotificacionLimiteGasto{
         DatabaseHandler db = new DatabaseHandler(context.getApplicationContext());
         if (db.checkLimitExcedido()) {
             createNotificationChannel();
-            Intent intent = new Intent(context, AddGastos.class);
+            Intent intent = new Intent(context, NotificacionLimiteGasto.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context, "3")
-                    .setSmallIcon(R.drawable.add)
+                    .setSmallIcon(R.drawable.ic_warning)
                     .setContentTitle("LIMITE DE GASTOS EXCEDIDO")
                     .setContentText("¡Has excedido el límite de gastos!")
                     .setPriority(NotificationCompat.PRIORITY_DEFAULT)
@@ -47,16 +44,12 @@ public class NotificacionLimiteGasto{
     }
 
     private void createNotificationChannel() {
-        // Create the NotificationChannel, but only on API 26+ because
-        // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             CharSequence name = "Canal";
             String description = "Canal de notificacion";
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("3", name, importance);
             channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = context.getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }

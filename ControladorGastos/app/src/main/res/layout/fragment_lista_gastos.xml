@@ -82,6 +82,6 @@
         android:layout_below="@id/llf"
         android:layout_marginTop="14dp"
         android:scrollbars="horizontal"
-        tools:listitem="@layout/layout_expense_item2" />
+        tools:listitem="@layout/layout_gasto_item2" />
 
 </RelativeLayout>

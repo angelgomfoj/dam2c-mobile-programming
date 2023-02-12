@@ -143,7 +143,7 @@
         android:layout_below="@id/tvExp"
         android:layout_marginTop="8dp"
         android:scrollbars="horizontal"
-        tools:listitem="@layout/layout_expense_item" />
+        tools:listitem="@layout/layout_gasto_item1" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_fab"
@@ -154,7 +154,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/colorTexto"
-        android:src="@drawable/add"
+        android:src="@drawable/ic_simple_add"
         app:fabSize="normal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

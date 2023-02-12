@@ -9,7 +9,7 @@
         android:padding="15dp">
 
         <TextView
-            android:id="@+id/tv_incomeDate"
+            android:id="@+id/tv_fechaGato"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="11/02/2023"
@@ -18,30 +18,30 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_incomeType"
+            android:id="@+id/tv_categoriaGasto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="28dp"
-            android:layout_toRightOf="@id/tv_incomeDate"
+            android:layout_toRightOf="@id/tv_fechaGato"
             android:text="Categoria"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_incomeNote"
+            android:id="@+id/tv_descripcionGasto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/tv_incomeType"
+            android:layout_below="@id/tv_categoriaGasto"
             android:layout_marginLeft="28dp"
-            android:layout_toRightOf="@id/tv_incomeDate"
+            android:layout_toRightOf="@id/tv_fechaGato"
             android:text="Descripcion"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/tv_incomeAmount"
+            android:id="@+id/tv_cantidadGasto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

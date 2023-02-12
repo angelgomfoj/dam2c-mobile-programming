@@ -6,8 +6,6 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.controladorgastos.DatabaseHandler;
-
 import com.example.controladorgastos.fragments.AddGastos;
 import com.example.controladorgastos.fragments.ViewGastos;
 import com.example.controladorgastos.fragments.Settings;

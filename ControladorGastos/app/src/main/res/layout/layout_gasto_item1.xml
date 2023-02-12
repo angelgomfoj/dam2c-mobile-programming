@@ -25,31 +25,31 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/tv_expenseJob"
+                    android:id="@+id/tv_categoriaGasto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Job"
+                    android:text="Categoria"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_expenseAmount"
+                    android:id="@+id/tv_cantidadGasto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Rs. 7000"
+                    android:text="1000"
                     android:textColor="@color/black"
                     android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tv_expenseDate"
+                    android:id="@+id/tv_fechaGasto"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="June 28, 2019"
+                    android:text="12/02/2023"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     android:textStyle="bold" />
