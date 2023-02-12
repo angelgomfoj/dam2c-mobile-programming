@@ -155,5 +155,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     }
 
+    public boolean deleteGasto(int id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM gasto WHERE ID ="+id);
+        return true;
+    }
+
+    public boolean checkLimitExcedido(){
+        List<Gasto> listaGastoTotal = getAllGastos();
+        double totalGastos=0;
+        for (Gasto gasto: listaGastoTotal) {
+            totalGastos+=gasto.getImporte();
+        }
+        double limiteastos = getUsuario().getLimiteGastos();
+
+        if(limiteastos-totalGastos<0){
+            return true;
+        }
+        return false;
+    }
+
 
 }

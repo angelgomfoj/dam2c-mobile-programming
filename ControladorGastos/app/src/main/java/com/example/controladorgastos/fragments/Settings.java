@@ -67,7 +67,6 @@ public class Settings extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_configuracion, container, false);
 
         init(view);
@@ -115,7 +114,7 @@ public class Settings extends Fragment {
                         InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.hideSoftInputFromWindow(getActivity().getCurrentFocus().getWindowToken(), 0);
                     } catch (Exception e) {
-                        // TODO: handle exception
+                        e.printStackTrace();
                     }
                     bnv.getMenu().getItem(1).setEnabled(true);
                     bnv.getMenu().getItem(2).setEnabled(true);

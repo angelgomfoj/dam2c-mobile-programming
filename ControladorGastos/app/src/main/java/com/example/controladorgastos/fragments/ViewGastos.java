@@ -1,15 +1,11 @@
 package com.example.controladorgastos.fragments;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -19,8 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controladorgastos.R;
 import com.example.controladorgastos.DatabaseHandler;
-//import com.example.expensetrackersystem.PieChart;
-//import com.example.expensetrackersystem.adapter.expenseAdapter2;
 import com.example.controladorgastos.adaptador.expenseAdapter2;
 import com.example.controladorgastos.modelo.Gasto;
 

@@ -13,11 +13,19 @@ import com.example.controladorgastos.fragments.ViewGastos;
 import com.example.controladorgastos.fragments.Settings;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener{
+public class MainActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
     BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
+            this.getSupportActionBar().hide();
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
+
         setContentView(R.layout.activity_main);
 
         DatabaseHandler db = new DatabaseHandler(getApplicationContext());
@@ -29,14 +37,15 @@ public class MainActivity extends AppCompatActivity implements BottomNavigationV
 
         settingsFragment = new Settings(bottomNavigationView);
 
-        if(db.getUsuario()==null){
+        if (db.getUsuario() == null) {
             bottomNavigationView.setSelectedItemId(R.id.settings);
             bottomNavigationView.getMenu().getItem(1).setEnabled(false);
             bottomNavigationView.getMenu().getItem(2).setEnabled(false);
-        }else{
+        } else {
             bottomNavigationView.setSelectedItemId(R.id.addGastos);
         }
     }
+
     AddGastos addGastosFragment = new AddGastos();
     ViewGastos viewGastosFragment = new ViewGastos();
     Settings settingsFragment = new Settings(bottomNavigationView);

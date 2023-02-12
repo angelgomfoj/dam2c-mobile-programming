@@ -1,5 +1,10 @@
 package com.example.controladorgastos.fragments;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.LayoutInflater;
@@ -14,10 +19,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.controladorgastos.NotificacionLimiteGasto;
 import com.example.controladorgastos.R;
 import com.example.controladorgastos.DatabaseHandler;
 import com.example.controladorgastos.adaptador.expenseAdapter;
@@ -198,6 +206,12 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
                     rv_expense.setHasFixedSize(true);
 
                     rv_expense.setAdapter(expenseAdapter);
+                    //NotificacionLimiteGasto.NotificationIfExceded(getContext());
+                     if(databaseHandler.checkLimitExcedido()) {
+                         NotificacionLimiteGasto nlg = new NotificacionLimiteGasto(getContext());
+                         nlg.NotificationIfExceded();
+                     }
+
                 }
 
             }
@@ -225,6 +239,5 @@ AddGastos extends Fragment implements AdapterView.OnItemSelectedListener {
 
     public void onNothingSelected(AdapterView<?> parent) {
     }
-
 
 }

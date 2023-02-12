@@ -1,6 +1,8 @@
 package com.example.controladorgastos.adaptador;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.text.Layout;
 import android.text.format.DateFormat;
 import android.view.LayoutInflater;
@@ -18,6 +20,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.controladorgastos.DatabaseHandler;
+import com.example.controladorgastos.NotificacionLimiteGasto;
 import com.example.controladorgastos.R;
 import com.example.controladorgastos.modelo.Gasto;
 
@@ -86,17 +89,49 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
         et_description.setText(g.getDescripcion());
 
         Button btn_save = customLayout.findViewById(R.id.btn_save);
-        Button btn_cancel = customLayout.findViewById(R.id.btn_cancel);
+        Button btn_delete = customLayout.findViewById(R.id.btn_cancel);
+
+        btn_delete.setText("Eliminar");
 
         builder.setView(customLayout);
         AlertDialog alertDialog = builder.create();
 
         alertDialog.show();
 
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
+        btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog.dismiss();
+
+
+                AlertDialog.Builder confirmationDialog = new AlertDialog.Builder(v.getContext());
+                confirmationDialog.setTitle("Eliminar gasto");
+                confirmationDialog.setMessage("¿Estás seguro de que desas eliminar este gasto?");
+                confirmationDialog.setPositiveButton("Sí",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                int id = g.getId();
+                                databaseHandler.deleteGasto(id);
+                                alertDialog.dismiss();
+                                if (mode==0){
+                                    listaGastos = databaseHandler.getAllGastos();
+                                }else{
+                                    listaGastos = databaseHandler.getFilteredGastos(filter);
+                                }
+                                double total = 0;
+                                for (Gasto g : listaGastos) {
+                                    total += g.getImporte();
+                                }
+                                gastoTotalFiltrado.setText(String.format("%.2f",total) + "€");
+                                notifyDataSetChanged();
+                            }
+                        });
+                confirmationDialog.setNegativeButton("Cancelar",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                alertDialog.dismiss();
+                            }
+                        });
+                confirmationDialog.show();
             }
         });
 
@@ -104,19 +139,19 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
             @Override
             public void onClick(View v) {
                 int id = g.getId();
-                double amount = Double.valueOf(et_income.getText().toString());
                 String category = s_category.getSelectedItem().toString();
                 String description = et_description.getText().toString();
                 long date = System.currentTimeMillis();
 
-                if (String.valueOf(amount).isEmpty()) {
-                    et_income.setError("Empty amount");
+                if (et_income.getText().toString().isEmpty()) {
+                    et_income.setError("Importe vacio");
                     return;
                 } else if (description.isEmpty()) {
-                    et_description.setError("Empty note");
+                    et_description.setError("Descripcion vacia");
                     return;
                 } else {
-                   databaseHandler.updateGasto(id, category, description, amount, date);
+                    double amount = Double.valueOf(et_income.getText().toString());
+                    databaseHandler.updateGasto(id, category, description, amount, date);
                     alertDialog.dismiss();
                 }
                 if (mode==0){
@@ -130,6 +165,8 @@ public class expenseAdapter2 extends RecyclerView.Adapter<expenseAdapter2.viewho
                 }
                 gastoTotalFiltrado.setText(String.format("%.2f",total) + "€");
                 notifyDataSetChanged();
+                NotificacionLimiteGasto nlgx = new NotificacionLimiteGasto(context);
+                        nlgx.NotificationIfExceded();
             }
         });
 
